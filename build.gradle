@@ -1,0 +1,16 @@
+allprojects {
+    apply plugin: 'java'
+    group = 'de.wiedehoeft'
+    version = '1.0'
+}
+
+subprojects {
+    apply plugin: 'java'
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        compile "javax.servlet:servlet-api:2.5"
+    }
+}
