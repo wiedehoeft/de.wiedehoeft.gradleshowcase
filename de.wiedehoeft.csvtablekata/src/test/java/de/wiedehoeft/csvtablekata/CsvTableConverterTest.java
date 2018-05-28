@@ -1,17 +1,23 @@
 package de.wiedehoeft.csvtablekata;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class CsvTableConverterTest {
 
+    private CsvTable csvTable;
+
+    @Before
+    public void setUp() throws Exception {
+        csvTable = new CsvTable();
+    }
+
     @Test
     public void extractTableColumns() {
-
         // Given
         String header = "Name;Strasse";
-        CsvTable csvTable = new CsvTable();
 
         // When
         csvTable.extractColumnHeader(header);
@@ -23,6 +29,7 @@ public class CsvTableConverterTest {
 
     @Test
     public void extractTableContent() {
+        // Given
         String content = "Peter Pan;Am Hang 5";
         CsvTable csvTable = new CsvTable(2);
 
@@ -36,6 +43,7 @@ public class CsvTableConverterTest {
 
     @Test
     public void extractMultiRowTableContent() {
+        // Given
         String firstContentRow = "Peter Pan;Am Hang 5";
         String secondContentRow = "Maria Schmitz;Kölner Straße 45";
         CsvTable csvTable = new CsvTable(2);
@@ -50,7 +58,6 @@ public class CsvTableConverterTest {
 
     @Test
     public void evaluateLongestContentOfColumn() {
-
         // Given
         String header = "Name; Strasse";
         String firstContentRow = "Peter Pan; Am Hang 5";
