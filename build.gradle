@@ -11,6 +11,11 @@ subprojects {
         jcenter()
     }
     dependencies {
-        compile "javax.servlet:servlet-api:2.5"
+        compile group: 'com.google.inject:guice:4.2.0'
+
+        testCompile 'junit:junit:4.12'
+        testCompile 'org.assertj:assertj-core:3.10.0'
+        testCompile 'org.mockito:mockito-core:2.+'
+
     }
 }
