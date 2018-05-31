@@ -43,4 +43,22 @@ public class RentalTest {
         // Expect
         assertThat(customer.rentMovie(5)).isEqualTo(6.00);
     }
+
+    @Test
+    public void printRental() {
+        customer.rentMovie(3);
+        customer.rentMovie(4);
+        customer.rentMovie(2);
+
+        // When
+        String rental = customer.printRental();
+
+        // Then
+        assertThat(rental).isEqualTo("" +
+                "Kill Bill: EUR 3.00\n" +
+                "Star Wars: EUR 4.50\n" +
+                "The Minions: EUR 3.00\n" +
+                "Total Charge: EUR 10.50");
+
+    }
 }

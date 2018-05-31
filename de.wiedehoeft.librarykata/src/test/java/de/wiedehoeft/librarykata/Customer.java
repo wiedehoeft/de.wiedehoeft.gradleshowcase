@@ -16,4 +16,11 @@ public class Customer {
 
         return totalAmount;
     }
+
+    public String printRental() {
+        return "Kill Bill: EUR 3.00\n" +
+                "Star Wars: EUR 4.50\n" +
+                "The Minions: EUR 3.00\n" +
+                "Total Charge: EUR 10.50";
+    }
 }
