@@ -1,5 +1,8 @@
 package de.wiedehoeft.librarykata;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 public class Customer {
 
     private static final double BASE_PRICE = 3.00;
@@ -25,6 +28,8 @@ public class Customer {
     }
 
     public String prettyPrint(double amount) {
-        return amount + "";
+        final NumberFormat numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
+        numberFormat.setMinimumFractionDigits(2);
+        return numberFormat.format(amount);
     }
 }
