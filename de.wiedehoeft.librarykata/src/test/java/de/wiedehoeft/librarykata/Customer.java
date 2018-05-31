@@ -18,21 +18,26 @@ public class Customer {
     }
 
     public double rentMovie(int days) {
-        totalAmount += BASE_PRICE;
+        double movieAmount = BASE_PRICE;
 
         if (days > DAYS_DISCOUNTED) {
-            totalAmount += ADDITIIONAL_PRICE * (days - DAYS_DISCOUNTED);
+            movieAmount += ADDITIIONAL_PRICE * (days - DAYS_DISCOUNTED);
         }
 
-        return totalAmount;
+        totalAmount += movieAmount;
+        return movieAmount;
     }
 
     public String printRental() {
-        return
-                this.rentals.get(0).getTitle() + ": EUR 3.00\n" +
-                        this.rentals.get(1).getTitle() + ": EUR 4.50\n" +
-                        this.rentals.get(2).getTitle() + ": EUR 3.00\n" +
-                        "Total Charge:" + prettyPrint(totalAmount);
+        StringBuilder rental = new StringBuilder();
+        this.rentals.forEach(movie -> {
+            rental.append(movie.getTitle());
+            rental.append(":");
+            rental.append(prettyPrint(movie.getAmount()));
+            rental.append("\n");
+        });
+        return rental.toString() +
+                "Total Charge:" + prettyPrint(totalAmount);
     }
 
     public String prettyPrint(double amount) {
@@ -43,6 +48,7 @@ public class Customer {
 
     public void rentMovie(Movie movie, int days) {
         this.rentals.add(movie);
-        rentMovie(days);
+        final double amount = rentMovie(days);
+        movie.setAmount(amount);
     }
 }
