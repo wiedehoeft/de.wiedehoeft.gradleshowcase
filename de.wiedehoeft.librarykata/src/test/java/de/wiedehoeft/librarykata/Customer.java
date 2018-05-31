@@ -8,7 +8,7 @@ public class Customer {
         totalAmount += 3.00;
 
         if (days > 3) {
-            totalAmount += 1.50;
+            totalAmount += 1.50 * (days - 3);
         }
 
         return totalAmount;
