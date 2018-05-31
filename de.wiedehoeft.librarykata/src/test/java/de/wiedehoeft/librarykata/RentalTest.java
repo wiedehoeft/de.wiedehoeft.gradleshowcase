@@ -66,6 +66,6 @@ public class RentalTest {
     public void prettyPrintAmount() {
         final double amount = customer.rentMovie(1);
 
-        assertThat(customer.prettyPrint(amount)).isEqualTo("3.00");
+        assertThat(customer.prettyPrint(amount)).isEqualTo(" EUR 3.00");
     }
 }

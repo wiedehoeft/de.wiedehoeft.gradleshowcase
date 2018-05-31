@@ -24,12 +24,12 @@ public class Customer {
         return "Kill Bill: EUR 3.00\n" +
                 "Star Wars: EUR 4.50\n" +
                 "The Minions: EUR 3.00\n" +
-                "Total Charge: EUR " + prettyPrint(totalAmount);
+                "Total Charge:" + prettyPrint(totalAmount);
     }
 
     public String prettyPrint(double amount) {
         final NumberFormat numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
         numberFormat.setMinimumFractionDigits(2);
-        return numberFormat.format(amount);
+        return " EUR " + numberFormat.format(amount);
     }
 }
