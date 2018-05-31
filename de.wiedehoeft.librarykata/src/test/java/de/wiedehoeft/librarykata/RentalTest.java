@@ -55,10 +55,10 @@ public class RentalTest {
 
         // Then
         assertThat(rental).isEqualTo("" +
-                "Kill Bill: EUR 3.00\n" +
-                "Star Wars: EUR 4.50\n" +
-                "The Minions: EUR 3.00\n" +
-                "Total Charge: EUR 10.50");
+                "Kill Bill\tEUR\t3.00\n" +
+                "Star Wars\tEUR\t4.50\n" +
+                "The Minions\tEUR\t3.00\n" +
+                "Total Charge\tEUR\t10.50");
 
     }
 
@@ -66,6 +66,6 @@ public class RentalTest {
     public void prettyPrintAmount() {
         final double amount = customer.rentMovie(1);
 
-        assertThat(customer.prettyPrint(amount)).isEqualTo(" EUR 3.00");
+        assertThat(customer.prettyPrint(amount)).isEqualTo("EUR\t3.00");
     }
 }

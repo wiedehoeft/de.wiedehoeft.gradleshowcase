@@ -32,18 +32,18 @@ public class Customer {
         StringBuilder rental = new StringBuilder();
         this.rentals.forEach(movie -> {
             rental.append(movie.getTitle());
-            rental.append(":");
+            rental.append("\t");
             rental.append(prettyPrint(movie.getAmount()));
             rental.append("\n");
         });
         return rental.toString() +
-                "Total Charge:" + prettyPrint(totalAmount);
+                "Total Charge" + "\t" + prettyPrint(totalAmount);
     }
 
     public String prettyPrint(double amount) {
         final NumberFormat numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
         numberFormat.setMinimumFractionDigits(2);
-        return " EUR " + numberFormat.format(amount);
+        return "EUR" +"\t" + numberFormat.format(amount);
     }
 
     public void rentMovie(Movie movie, int days) {
