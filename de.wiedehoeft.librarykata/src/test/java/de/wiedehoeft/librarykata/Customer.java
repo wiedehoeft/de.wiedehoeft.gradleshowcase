@@ -4,7 +4,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Queue;
 
 public class Customer {
 
@@ -12,10 +11,10 @@ public class Customer {
     private static final int DAYS_DISCOUNTED = 3;
     private static final double ADDITIIONAL_PRICE = 1.50;
     private double totalAmount;
-    private List<String> rentals;
+    private List<Movie> rentals;
 
     public Customer() {
-        this.rentals = new ArrayList<>();
+        this.rentals = new ArrayList<Movie>();
     }
 
     public double rentMovie(int days) {
@@ -30,9 +29,9 @@ public class Customer {
 
     public String printRental() {
         return
-                this.rentals.get(0) + ": EUR 3.00\n" +
-                        this.rentals.get(1) + ": EUR 4.50\n" +
-                        this.rentals.get(2) + ": EUR 3.00\n" +
+                this.rentals.get(0).getTitle() + ": EUR 3.00\n" +
+                        this.rentals.get(1).getTitle() + ": EUR 4.50\n" +
+                        this.rentals.get(2).getTitle() + ": EUR 3.00\n" +
                         "Total Charge:" + prettyPrint(totalAmount);
     }
 
@@ -42,8 +41,8 @@ public class Customer {
         return " EUR " + numberFormat.format(amount);
     }
 
-    public void rentMovie(String title, int days) {
-        this.rentals.add(title);
+    public void rentMovie(Movie movie, int days) {
+        this.rentals.add(movie);
         rentMovie(days);
     }
 }

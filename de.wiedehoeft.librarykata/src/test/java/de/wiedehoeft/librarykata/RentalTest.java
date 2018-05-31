@@ -46,9 +46,9 @@ public class RentalTest {
 
     @Test
     public void printRental() {
-        customer.rentMovie("Kill Bill", 3);
-        customer.rentMovie("Star Wars", 4);
-        customer.rentMovie("The Minions", 2);
+        customer.rentMovie(new Movie("Kill Bill"), 3);
+        customer.rentMovie(new Movie("Star Wars"), 4);
+        customer.rentMovie(new Movie("The Minions"), 2);
 
         // When
         String rental = customer.printRental();
