@@ -17,7 +17,10 @@ public class Customer {
         this.rentals = new ArrayList<Movie>();
     }
 
-    private double rentMovie(int days) {
+
+    public void rentMovie(Movie movie, int days) {
+        this.rentals.add(movie);
+
         double movieAmount = BASE_PRICE;
 
         if (days > DAYS_DISCOUNTED) {
@@ -25,7 +28,8 @@ public class Customer {
         }
 
         totalAmount += movieAmount;
-        return movieAmount;
+
+        movie.setAmount(movieAmount);
     }
 
     public String printRental() {
@@ -44,12 +48,6 @@ public class Customer {
         final NumberFormat numberFormat = NumberFormat.getInstance(Locale.ENGLISH);
         numberFormat.setMinimumFractionDigits(2);
         return "EUR" +"\t" + numberFormat.format(amount);
-    }
-
-    public void rentMovie(Movie movie, int days) {
-        this.rentals.add(movie);
-        final double amount = rentMovie(days);
-        movie.setAmount(amount);
     }
 
     public double getTotalAmount() {
