@@ -15,14 +15,14 @@ public class RentalTest {
     }
 
     @Test
-    public void rentMovieForOneDay() {
+    public void rentMovieForFirstDayWithBasePrice() {
 
         // Expect
         assertThat(customer.rentMovie(1)).isEqualTo(3.00);
     }
 
     @Test
-    public void rentMovieForThreeDays() {
+    public void rentMovieForMaxDaysWithBasePrice() {
 
         // Expect
         assertThat(customer.rentMovie(3)).isEqualTo(3.00);
@@ -30,7 +30,7 @@ public class RentalTest {
 
 
     @Test
-    public void rentMovieForFourDays() {
+    public void rentMovieForFirstDayWithExtraCosts() {
 
         // Expect
         assertThat(customer.rentMovie(4)).isEqualTo(4.50);
@@ -38,7 +38,7 @@ public class RentalTest {
 
 
     @Test
-    public void rentMovieForFiveDays() {
+    public void rentMovieForSecondDayWithExtraCosts() {
 
         // Expect
         assertThat(customer.rentMovie(5)).isEqualTo(6.00);
