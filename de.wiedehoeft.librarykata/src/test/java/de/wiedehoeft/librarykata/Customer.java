@@ -17,7 +17,7 @@ public class Customer {
         this.rentals = new ArrayList<Movie>();
     }
 
-    public double rentMovie(int days) {
+    private double rentMovie(int days) {
         double movieAmount = BASE_PRICE;
 
         if (days > DAYS_DISCOUNTED) {
@@ -50,5 +50,9 @@ public class Customer {
         this.rentals.add(movie);
         final double amount = rentMovie(days);
         movie.setAmount(amount);
+    }
+
+    public double getTotalAmount() {
+        return this.totalAmount;
     }
 }

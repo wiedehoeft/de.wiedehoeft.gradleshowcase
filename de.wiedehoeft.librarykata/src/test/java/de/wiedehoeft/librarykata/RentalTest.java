@@ -8,44 +8,55 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class RentalTest {
 
     private Customer customer;
+    private Movie movie;
 
     @Before
     public void setUp() throws Exception {
         customer = new Customer();
+        movie = new Movie("The Hunger Games");
     }
 
     @Test
     public void rentMovieForFirstDayWithBasePrice() {
+        // When
+        customer.rentMovie(movie, 1);
 
-        // Expect
-        assertThat(customer.rentMovie(1)).isEqualTo(3.00);
+        // Then
+        assertThat(customer.getTotalAmount()).isEqualTo(3.00);
     }
 
     @Test
     public void rentMovieForMaxDaysWithBasePrice() {
+        // When
+        customer.rentMovie(movie, 3);
 
-        // Expect
-        assertThat(customer.rentMovie(3)).isEqualTo(3.00);
+        // Then
+        assertThat(customer.getTotalAmount()).isEqualTo(3.00);
     }
 
 
     @Test
     public void rentMovieForFirstDayWithExtraCosts() {
+        // When
+        customer.rentMovie(movie, 4);
 
-        // Expect
-        assertThat(customer.rentMovie(4)).isEqualTo(4.50);
+        // Then
+        assertThat(customer.getTotalAmount()).isEqualTo(4.50);
     }
 
 
     @Test
     public void rentMovieForSecondDayWithExtraCosts() {
+        // When
+        customer.rentMovie(movie, 5);
 
-        // Expect
-        assertThat(customer.rentMovie(5)).isEqualTo(6.00);
+        // Then
+        assertThat(customer.getTotalAmount()).isEqualTo(6.00);
     }
 
     @Test
     public void printRental() {
+        // Given
         customer.rentMovie(new Movie("Kill Bill"), 3);
         customer.rentMovie(new Movie("Star Wars"), 4);
         customer.rentMovie(new Movie("The Minions"), 2);
@@ -64,8 +75,10 @@ public class RentalTest {
 
     @Test
     public void prettyPrintAmount() {
+        // Given
         final double amount = customer.rentMovie(1);
 
+        // Expect
         assertThat(customer.prettyPrint(amount)).isEqualTo("EUR\t3.00");
     }
 }
