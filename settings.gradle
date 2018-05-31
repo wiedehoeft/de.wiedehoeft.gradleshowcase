@@ -1,3 +1,4 @@
+rootProject.name = 'parent'
 include 'de.wiedehoeft.csvtablekata'
 include 'de.wiedehoeft.fizzbuzzkata'
 include 'de.wiedehoeft.hangmankata'
