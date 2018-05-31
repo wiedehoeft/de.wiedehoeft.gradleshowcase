@@ -24,7 +24,7 @@ public class Customer {
         return "Kill Bill: EUR 3.00\n" +
                 "Star Wars: EUR 4.50\n" +
                 "The Minions: EUR 3.00\n" +
-                "Total Charge: EUR " + totalAmount + "0";
+                "Total Charge: EUR " + prettyPrint(totalAmount);
     }
 
     public String prettyPrint(double amount) {
