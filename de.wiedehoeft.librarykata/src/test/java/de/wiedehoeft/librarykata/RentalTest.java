@@ -61,4 +61,11 @@ public class RentalTest {
                 "Total Charge: EUR 10.50");
 
     }
+
+    @Test
+    public void prettyPrintAmount() {
+        final double amount = customer.rentMovie(1);
+
+        assertThat(customer.prettyPrint(amount)).isEqualTo("3.00");
+    }
 }
