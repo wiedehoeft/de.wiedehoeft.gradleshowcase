@@ -17,4 +17,16 @@ public class RentalTest {
         // Then
         assertThat(amount).isEqualTo(3.00);
     }
+
+    @Test
+    public void rentMovieForThreeDays() {
+        // Given
+        Customer customer = new Customer();
+
+        // When
+        final double amount = customer.rentMovie(2);
+
+        // Then
+        assertThat(amount).isEqualTo(3.00);
+    }
 }
