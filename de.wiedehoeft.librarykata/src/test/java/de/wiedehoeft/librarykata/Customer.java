@@ -5,6 +5,12 @@ public class Customer {
     private double totalAmount;
 
     public double rentMovie(int days) {
-        return totalAmount += 3;
+        totalAmount += 3.00;
+
+        if (days > 3) {
+            totalAmount += 1.50;
+        }
+
+        return totalAmount;
     }
 }
