@@ -1,21 +1,22 @@
+apply plugin: 'java'
+
 allprojects {
-    apply plugin: 'java'
-    group = 'de.wiedehoeft'
+    group = 'de.wiedehoeft.gradleshowcase'
     version = '1.0'
 }
 
 subprojects {
     apply plugin: 'java'
     repositories {
-        mavenCentral()
+        maven { url "http://m2repo.system.local/content/groups/full/" }
         jcenter()
     }
     dependencies {
-        compile group: 'com.google.inject:guice:4.2.0'
+        implementation 'com.google.inject:guice:4.2.0'
 
-        testCompile 'junit:junit:4.12'
-        testCompile 'org.assertj:assertj-core:3.10.0'
-        testCompile 'org.mockito:mockito-core:2.+'
+        testImplementation 'junit:junit:4.12'
+        testImplementation 'org.assertj:assertj-core:3.10.0'
+        testImplementation 'org.mockito:mockito-core:2.+'
 
     }
 }
