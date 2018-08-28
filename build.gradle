@@ -5,17 +5,30 @@ allprojects {
 }
 
 subprojects {
-    apply plugin: 'java'
+
     repositories {
         mavenCentral()
         jcenter()
     }
+
     dependencies {
-        compile group: 'com.google.inject:guice:4.2.0'
+        runtime(
+                'com.google.inject:guice:4.2.0'
+        )
 
-        testCompile 'junit:junit:4.12'
-        testCompile 'org.assertj:assertj-core:3.10.0'
-        testCompile 'org.mockito:mockito-core:2.+'
-
+        testImplementation(
+                'org.junit.jupiter:junit-jupiter-api:5.1.0',
+                'org.assertj:assertj-core:3.10.0',
+                'org.mockito:mockito-core:2.+',
+                'junit:junit:4.12'
+        )
+        testRuntimeOnly(
+                'org.junit.jupiter:junit-jupiter-engine:5.1.0',
+                'org.junit.vintage:junit-vintage-engine:5.1.0'
+        )
+    }
+    test {
+        useJUnitPlatform()
     }
 }
+
