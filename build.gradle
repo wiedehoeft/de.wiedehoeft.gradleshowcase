@@ -4,6 +4,17 @@ allprojects {
     version = '1.0'
 }
 
+project(':de.wiedehoeft.agilitykata') {
+    apply plugin: 'application'
+    mainClassName = 'wordcount.Main'
+
+    jar {
+        manifest {
+            attributes 'Main-Class': mainClassName
+        }
+    }
+}
+
 subprojects {
 
     repositories {
