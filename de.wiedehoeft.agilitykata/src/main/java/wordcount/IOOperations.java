@@ -1,8 +1,9 @@
 package wordcount;
 
-public abstract class IOOperations {
+import java.io.IOException;
 
-    abstract void print(String line);
+public interface IOOperations {
+    String getInput();
 
-    abstract String getUserInput();
+    void printOutput(String anyOutput) throws IOException;
 }

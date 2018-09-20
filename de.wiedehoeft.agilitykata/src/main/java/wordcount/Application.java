@@ -1,18 +1,30 @@
 package wordcount;
 
+import java.io.IOException;
+
 public class Application {
 
-    private IOController ioController;
     private IOOperations ioOperations;
+    private Model model;
+    private WordCounter wordCounter;
 
-    public Application() {
-        this.ioController = new IOController();
-        ioOperations = ioController.getController();
+    public Application(IOOperations ioOperations, WordCounter wordCounter) {
+        this.ioOperations = ioOperations;
+        this.model = new Model();
+        this.wordCounter = wordCounter;
     }
 
-    public void getInputFromUser() {
-        ioOperations.print("Hello World");
-        String input = ioOperations.getUserInput();
-        ioOperations.print("Your input was: " + input);
+    public void getSentence() throws IOException {
+        ioOperations.printOutput("Enter sentence");
+        model.setSentence(ioOperations.getInput());
+    }
+
+    public void printResult() throws IOException {
+        int numberOfWords = wordCounter.countFrom(model.getSentence());
+        ioOperations.printOutput("Number of words: " + numberOfWords);
+    }
+
+    public Model getModel() {
+        return model;
     }
 }

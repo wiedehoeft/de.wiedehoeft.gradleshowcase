@@ -1,29 +1,30 @@
 package wordcount;
 
+import wordcount.IOOperations;
+
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.util.Scanner;
 
-public class ScannerIO extends IOOperations {
+public class ScannerIO implements IOOperations {
 
-    private final Scanner scanner;
-    private final PrintWriter writer;
+    private InputStream input;
+    private OutputStream output;
 
-    public ScannerIO(InputStream in, OutputStream out) {
-        scanner = new Scanner(in);
-        writer = new PrintWriter(out, true);
+    public ScannerIO(InputStream input, OutputStream output) {
+        this.input = input;
+        this.output = output;
     }
 
     @Override
-    void print(String line) {
-        writer.println(line);
+    public String getInput() {
+        Scanner scanner = new Scanner(input);
+        return scanner.nextLine();
     }
 
     @Override
-    String getUserInput() {
-        StringBuilder userInput = new StringBuilder();
-        userInput.append(scanner.nextLine());
-        return userInput.toString();
+    public void printOutput(String anyOutput) throws IOException {
+        output.write(anyOutput.getBytes());
     }
 }

@@ -1,8 +1,10 @@
-package wordcount;
+package wordcount.dynamic;
+
+import wordcount.dynamic.IOOperationsDynamic;
 
 import java.io.Console;
 
-public class ConsoleIO extends IOOperations {
+public class ConsoleIO extends IOOperationsDynamic {
 
     private final Console console;
 

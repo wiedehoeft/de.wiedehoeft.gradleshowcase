@@ -1,10 +1,10 @@
-package wordcount;
+package wordcount.dynamic;
 
 import java.io.*;
 
-public class IOController {
+public class IOControllerDynamic {
 
-    public IOOperations getController() {
+    public IOOperationsDynamic getController() {
         if (System.console() != null) {
             System.out.println("Using Console");
             return new ConsoleIO();
@@ -14,7 +14,7 @@ public class IOController {
         }
     }
 
-    public IOOperations streamDevice(InputStream in, OutputStream out) {
-        return new ScannerIO(in, out);
+    IOOperationsDynamic streamDevice(InputStream in, OutputStream out) {
+        return new ScannerIODynamic(in, out);
     }
 }
