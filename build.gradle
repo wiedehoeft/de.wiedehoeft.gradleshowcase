@@ -17,18 +17,14 @@ project(':de.wiedehoeft.agilitykata') {
     sourceSets {
         integrationTest {
             java {
-                compileClasspath += srcDirs 'src/test/fit' + main.output + test.output + configurations.compileOnly + configurations.testCompile
+                compileClasspath += srcDirs 'src/test/fit'
+                compileClasspath += sourceSets.test.compileClasspath
             }
         }
     }
 
-    configurations {
-        integrationTestCompile.extendsFrom testCompile
-        integrationTestRuntime.extendsFrom testRuntime
-    }
-
     task fit(type: JavaExec) {
-        classpath += sourceSets.test.compileClasspath + sourceSets.test.runtimeClasspath
+        classpath += sourceSets.test.compileClasspath + sourceSets.test.runtimeClasspath + sourceSets.integrationTest.runtimeClasspath
 
         main = 'fit.FileRunner'
 

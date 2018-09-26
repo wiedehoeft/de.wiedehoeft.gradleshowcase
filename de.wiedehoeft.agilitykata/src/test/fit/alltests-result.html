@@ -14,11 +14,9 @@
 </ul>
 
 <table border cellspacing="0" cellpadding="3">
-    <tr><td colspan="3" bgcolor="#ffffcf">Pricing<hr><pre>java.lang.RuntimeException: The fixture "Pricing" was not found.<br />	at fit.Fixture.loadFixture(Unknown Source)<br />	at fit.Fixture.getLinkedFixtureWithArgs(Unknown Source)<br />	at fit.Fixture.doTables(Unknown Source)<br />	at fit.FileRunner.process(Unknown Source)<br />	at fit.FileRunner.run(Unknown Source)<br />	at fit.FileRunner.main(Unknown Source)<br />Caused by: java.lang.ClassNotFoundException: Pricing<br />	at java.base/jdk.internal.loader.BuiltinClassLoader.loadClass(BuiltinClassLoader.java:582)<br />	at java.base/jdk.internal.loader.ClassLoaders$AppClassLoader.loadClass(ClassLoaders.java:190)<br />	at java.base/java.lang.ClassLoader.loadClass(ClassLoader.java:499)<br />	at java.base/java.lang.Class.forName0(Native Method)<br />	at java.base/java.lang.Class.forName(Class.java:291)<br />	... 6 more<br /></pre></td></tr>
-    <tr> <td> days rented </td> <td> regularPrice() </td> <td> newRelease() </td></tr>
-    <tr> <td> 1 </td> <td> EUR 1.50 </td> <td> EUR 2.00 </td> </tr>
-    <tr> <td> 2 </td> <td> EUR 1.50 </td> <td> EUR 2.00 </td> </tr>
-    <tr> <td> 3 </td> <td> EUR 1.50 </td> <td> EUR 3.75 </td> </tr>
-    <tr> <td> 4 </td> <td> EUR 3.00 </td> <td> EUR 5.50 </td> </tr>
-    <tr> <td> 5 </td> <td> EUR 4.50 </td> <td> EUR 7.25 </td> </tr>
+    <tr><td colspan="3">WordCount</td></tr>
+    <tr> <td> sentence               </td> <td> wordCount() </td> <td> ignoreStopwords() </td></tr>
+    <tr> <td> Mary                   </td> <td bgcolor="#cfffcf"> 1           </td> <td bgcolor="#cfffcf"> 0                 </td> </tr>
+    <tr> <td> Mary had a             </td> <td bgcolor="#cfffcf"> 3           </td> <td bgcolor="#cfffcf"> 0                 </td> </tr>
+    <tr> <td> Mary had a little lamb </td> <td bgcolor="#cfffcf"> 5           </td> <td bgcolor="#cfffcf"> 0                 </td> </tr>
 </table>
