@@ -24,3 +24,10 @@ Deswegen sollte die Anwendung wie folgt gestartet werden:
 # Akzeptanztests mit Fit
 Hierfür wurde ein separater Gradle-Task erstellt. Dieser kann mit `./gradlew fit` gestartet werden.
 Es werden alle Tests der src/test/fit/alltests.html ausgeführt.
+
+# Weiteres
+Der Ordner src/main/java/dynamic enthält noch einige Klassen, die verwendet werden können, wenn
+statt des Scanners die java.io.Console verwendet werden soll. 
+Diese ist mächtiger als die Scanner-Klasse steht bei Tests oder dem Starten über eine IDE-Konsole
+aber nicht zur Verfügung. Deswegen unterscheiden die Klassen dynamisch, womit der User arbeitet.
+Ist die Console verfügbar wird diese genommen, ansonsten die Scanner-Klasse als Fallback.
