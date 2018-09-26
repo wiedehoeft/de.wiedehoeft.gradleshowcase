@@ -1,4 +1,4 @@
-package wordcount.demo;
+package wordcount;
 
 import org.junit.jupiter.api.Test;
 import wordcount.IOOperations;
