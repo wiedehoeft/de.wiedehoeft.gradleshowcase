@@ -1,5 +1,4 @@
 # Add logger to application
-
 1) We use slf4j as abstraction layer 
     ```
     dependencies {
@@ -101,6 +100,23 @@
     ``` 
 
 # Analyze and customize the property file
+
+## General structure
+A property file can contain following properties:
+* some basic information like: name
+* appender
+* logger
+* rootLogger
+* filter
+
+Every property gets a name when it is defined, e.g.
+
+`appender.<name>`
+
+Next the attributes for the current property are defined, e.g. for log level
+
+`appender.<name>.level`
+
 ## Questions
 1) Why are only error events shown in console?
     Because we currently did not define a logger property for our own packages. That means our logging output
