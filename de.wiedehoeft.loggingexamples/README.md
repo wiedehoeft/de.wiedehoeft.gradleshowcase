@@ -227,3 +227,10 @@ Try to print the fully qualified class name in file log output.
     ```
     
 7) Customize third party libraries log output.
+    Just be sure that logger name matches package name of library:
+    ```
+    logger.flyway.name=org.flywaydb
+    logger.flyway.level = warn
+    logger.flyway.additivity = false
+    logger.flyway.appenderRef.stdout.ref = STDOUT
+    ```

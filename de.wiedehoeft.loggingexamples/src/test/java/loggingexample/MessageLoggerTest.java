@@ -3,6 +3,7 @@ package loggingexample;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.ThreadContext;
+import org.flywaydb.core.Flyway;
 import org.junit.jupiter.api.Test;
 
 public class MessageLoggerTest {
@@ -31,7 +32,11 @@ public class MessageLoggerTest {
             logger.debug("Any expensive operation {}", () -> notAlwaysExecuteMe());
         };
         inThreadContext(runnable3);
+    }
 
+    @Test
+    void executeFlyMigration() {
+        Flyway.configure().dataSource("jdbc:h2:~/test", "sa", "sa").load().migrate();
     }
 
     private String notAlwaysExecuteMe() {
