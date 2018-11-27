@@ -97,11 +97,55 @@
 
 7) Running tests again results in:
     ```
-    I am at info level!
-    I am at warn level!
     I am at error level!
     ``` 
 
 # Analyze and customize the property file
-TBD
+## Questions
+1) Why are only error events shown in console?
+    Because we currently did not define a logger property for our own packages. That means our logging output
+    will be assigned to rootLogger with Log-Level: Info. But this does not result in info messages logged, right?
+    Caused by the threshold filter defined for the console appender, all output except error messages will not be
+    printed on console. After removing it the output is:
+    ```
+    I am at debug level!
+    I am at info level!
+    I am at warn level!
+    I am at error level!
+    ```
+    Still missing the trace message...
+    The file contains a root Threshold-Filter on debug level. So trace messages are currently filtered.
+    Remove it, too and result is:
+    ```
+    I am at trace level!
+    I am at debug level!
+    I am at info level!
+    I am at warn level!
+    I am at error level!
+    ```
+    As expected.
+
+
+2) How can we add a more specific log level for our own classes/packages and/or log to defined rolling file?
+    For this we should add a custom logger, for our own packages.
+    ```
+    logger.rolling.name = loggingexample
+    logger.rolling.level = trace
+    logger.rolling.additivity = false
+    logger.rolling.appenderRef.rolling.ref = RollingFile
+    logger.rolling.appenderRef.stdout.ref = STDOUT
+    ```
+    Now the log output will be written to file and console and we can decide which log level we want to use.
+    Careful: Threshold filters like defined before would filter these results, too!
+
+3) How to define different logLevels for console and file?
+    Just add a different log level for the file appender:
+    `logger.rolling.appenderRef.rolling.level = info`
+
+
+4) How could we add a custom log pattern to our output?
+
+
+3) How can we add thread information to our output?
+4) How can we lazy log with lambdas?
    
