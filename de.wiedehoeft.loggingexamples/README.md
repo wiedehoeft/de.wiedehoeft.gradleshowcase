@@ -144,8 +144,86 @@
 
 
 4) How could we add a custom log pattern to our output?
+See https://logging.apache.org/log4j/2.x/manual/layouts.html#PatternLayout for further explanation.
+Try to print the fully qualified class name in file log output.
 
-
-3) How can we add thread information to our output?
-4) How can we lazy log with lambdas?
+5) How can we add thread information to our output?
+    Let us mess up our test class
+    ```
+        @Test
+        void logHelloWorld() {
+           Runnable runnable = () -> logger.info("I am at info level!");
+           inThreadContext(runnable);
    
+           Runnable runnable0 = () -> {
+               logger.trace("I am at trace level!");
+               logger.debug("I am at debug level!");
+               logger.info("I am at info level!");
+               logger.warn("I am at warn level!");
+               logger.error("I am at error level!");
+           };
+           inThreadContext(runnable0);
+   
+           Runnable runnable2 = () -> logger.error("I am at error level!");
+           inThreadContext(runnable2);
+        }
+    ```
+    Now we are no longer able to get needed context information, to see what thread created which output.
+    A typical scenario in a multi user application, like a webservice.
+    Log4j2 uses Map Diagnostic Context for this scenario, see https://logging.apache.org/log4j/2.x/manual/thread-context.html.
+    The missing method could be look like this (Thread context is imported from apache.logging.log4j):
+    ```
+     private void inThreadContext(Runnable runnable) throws InterruptedException {
+            ThreadContext.put("Thread", threadIdentifier + "");
+            new Thread(runnable).start();
+            ThreadContext.clearAll();
+            threadIdentifier++;
+     }
+    ```
+    The constant variable is
+    ` private static long threadIdentifier;`
+
+6) How can we lazy log with lambdas?
+    Let us add a new Runnable
+    ```
+     Runnable runnable3 = () -> {
+        logger.debug("Any expensive operation {}", notAlwaysExecuteMe());
+    };
+    inThreadContext(runnable3);
+    ```
+    The new method is
+    ```
+    private String notAlwaysExecuteMe() {
+        logger.info("Method called!");
+        return "Hello from debug logger";
+    }
+    ```
+    Change the log level for console to info. Then we will see that the method will be called,
+    although we are currently not interested in debug message. An earlier solution was to write
+    declarations like this:
+    ```
+    if(logger.isDebugEnabled()) {
+       ...
+    }
+    ```
+    This results in messy code which is harder to read, because there are more information, you are not
+    interested.
+    Since Java 8 there is a better solution:
+    ```
+    Runnable runnable3 = () -> {
+        logger.debug("Any expensive operation {}", () -> notAlwaysExecuteMe());
+    };
+    inThreadContext(runnable3);
+    ```
+    The drawback is that there is currently no slf4j support, so we need to use the log4j2 logger.
+    ```
+    import org.apache.logging.log4j.Logger;
+    import org.apache.logging.log4j.ThreadContext;
+    
+    public class MessageLoggerTest {
+        private static final Logger logger = LogManager.getLogger(MessageLoggerTest.class);
+        ...
+    }
+    ```
+    
+7) Customize third party libraries log output.
