@@ -4,18 +4,60 @@ allprojects {
     version = '1.0'
 }
 
+project(':de.wiedehoeft.agilitykata') {
+    apply plugin: 'application'
+    mainClassName = 'wordcount.Main'
+
+    jar {
+        manifest {
+            attributes 'Main-Class': mainClassName
+        }
+    }
+
+    sourceSets {
+        integrationTest {
+            java {
+                compileClasspath += srcDirs 'src/test/fit'
+                compileClasspath += sourceSets.test.compileClasspath
+            }
+        }
+    }
+
+    task fit(type: JavaExec) {
+        classpath += sourceSets.test.compileClasspath + sourceSets.test.runtimeClasspath + sourceSets.integrationTest.runtimeClasspath
+
+        main = 'fit.FileRunner'
+
+        args 'src/test/fit/alltests.html', 'src/test/fit/alltests-result.html'
+    }
+}
+
 subprojects {
-    apply plugin: 'java'
+
     repositories {
         mavenCentral()
         jcenter()
     }
+
     dependencies {
-        compile group: 'com.google.inject:guice:4.2.0'
+        runtime(
+                'com.google.inject:guice:4.2.0'
+        )
 
-        testCompile 'junit:junit:4.12'
-        testCompile 'org.assertj:assertj-core:3.10.0'
-        testCompile 'org.mockito:mockito-core:2.+'
-
+        testImplementation(
+                'org.junit.jupiter:junit-jupiter-api:5.1.0',
+                'org.assertj:assertj-core:3.10.0',
+                'org.mockito:mockito-core:2.+',
+                'junit:junit:4.12',
+                'com.c2.fit:fit:1.1'
+        )
+        testRuntimeOnly(
+                'org.junit.jupiter:junit-jupiter-engine:5.1.0',
+                'org.junit.vintage:junit-vintage-engine:5.1.0'
+        )
+    }
+    test {
+        useJUnitPlatform()
     }
 }
+
