@@ -22,7 +22,8 @@ class PdfFileCreator {
   }
 
   void save() throws IOException {
-    pdfDocument.save(new File(title));
+    final File file = new File(String.format("%s.pdf", title));
+    pdfDocument.save(file);
   }
 
   void addPage() {
