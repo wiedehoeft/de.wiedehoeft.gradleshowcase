@@ -3,6 +3,8 @@ package de.wiedehoeft.pdfcreation.pdf;
 import be.quodlibet.boxable.BaseTable;
 import be.quodlibet.boxable.Cell;
 import be.quodlibet.boxable.Row;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
@@ -12,33 +14,41 @@ import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 class PdfPage {
 
   private PDPage pdPage;
   private PDRectangle rectangle;
 
+  private static final Logger logger = LogManager.getLogger(PdfPage.class);
+
   PdfPage(PDPage pdPage) {
     this.pdPage = pdPage;
     this.rectangle = pdPage.getMediaBox();
-    System.out.println("Höhe: " + rectangle.getHeight());
-    System.out.println("Breite: " + rectangle.getWidth());
-    System.out.println("Links unten X: " + rectangle.getLowerLeftX());
-    System.out.println("Rechts oben X: " + rectangle.getUpperRightX());
-    System.out.println("Unten links Y: " + rectangle.getLowerLeftY());
-    System.out.println("Oben rechts Y: " + rectangle.getUpperRightY());
+    logPdfInformation();
   }
 
-  void addSection(PDDocument pdDocument) throws IOException {
+  private void logPdfInformation() {
+    logger.debug("Initializing PDF document with following size.");
+    logger.debug("Höhe: " + rectangle.getHeight());
+    logger.debug("Breite: " + rectangle.getWidth());
+    logger.debug("Links unten X: " + rectangle.getLowerLeftX());
+    logger.debug("Rechts oben X: " + rectangle.getUpperRightX());
+    logger.debug("Unten links Y: " + rectangle.getLowerLeftY());
+    logger.debug("Oben rechts Y: " + rectangle.getUpperRightY());
+  }
+
+  void addSection(PDDocument pdDocument, PdfFont pdfFont, int xStart, int yStart) throws IOException {
 
     PDPageContentStream contentStream = new PDPageContentStream(pdDocument, pdPage);
 
     contentStream.beginText();
 
-    contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
+    contentStream.setFont(pdfFont.fontType, pdfFont.size);
     contentStream.setLeading(14.5f);
 
-    contentStream.newLineAtOffset(25, 100);
+    contentStream.newLineAtOffset(xStart, yStart);
     String line1 = "World War II (often abbreviated to WWII or WW2), "
       + "also known as the Second World War,";
     contentStream.showText(line1);
@@ -65,6 +75,38 @@ class PdfPage {
     contentStream.close();
   }
 
+  void addTable(PDDocument pdDocument, Optional<String> header, List<String> content, Point position) throws IOException {
+    final int margin = 50;
+    final PdfTable pdfTable = new PdfTable(margin);
+
+    final Point startingPosition = pdfTable.calculateStartingPosition(rectangle, position);
+    final float columnSize = (float) pdfTable.calculateRowSize(content.size());
+
+    logger.debug("Creating table at {} with column-size {}", startingPosition, columnSize);
+
+    boolean drawContent = true;
+    float bottomMargin = 10;
+
+    float tableWidth = rectangle.getWidth() - (2 * margin);
+
+    BaseTable table = new BaseTable(startingPosition.y, startingPosition.y, bottomMargin, tableWidth, margin, pdDocument, pdPage, true,
+      drawContent);
+
+    Row<PDPage> headerRow = table.createRow(15f);
+    Cell<PDPage> cell = headerRow.createCell(100, "Awesome Facts About Belgium");
+    cell.setFont(PDType1Font.HELVETICA_BOLD);
+    //cell.setFillColor(Color.BLACK);
+    table.addHeaderRow(headerRow);
+
+    content.forEach(rowContent -> {
+      Row<PDPage> row = table.createRow(10f);
+      row.createCell(columnSize, rowContent);
+    });
+
+    table.draw();
+  }
+
+  @Deprecated
   void addTable(PDDocument pdfDocument) throws IOException {
     //Dummy Table
     float margin = 100;
@@ -74,12 +116,9 @@ class PdfPage {
     float tableWidth = rectangle.getWidth() - (2 * margin);
 
     boolean drawContent = true;
-    float yStart = yStartNewPage;
     float bottomMargin = 70;
-    // y position is your coordinate of top left corner of the table
-    float yPosition = 550;
 
-    BaseTable table = new BaseTable(yStart, yStartNewPage, bottomMargin, tableWidth, margin, pdfDocument, pdPage, true,
+    BaseTable table = new BaseTable(yStartNewPage, yStartNewPage, bottomMargin, tableWidth, margin, pdfDocument, pdPage, true,
       drawContent);
     //Create Header row
     Row<PDPage> headerRow = table.createRow(15f);
@@ -98,6 +137,7 @@ class PdfPage {
     table.draw();
   }
 
+  @Deprecated
   private List<String[]> getFacts() {
     ArrayList<String[]> facts = new ArrayList<>();
     facts.add(new String[]{"Hello World", "Hello Apache", "Hello PDF"});

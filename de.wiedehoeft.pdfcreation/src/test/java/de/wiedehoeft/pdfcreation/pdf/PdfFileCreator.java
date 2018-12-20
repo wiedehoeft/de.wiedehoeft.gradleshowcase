@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 class PdfFileCreator {
 
@@ -34,7 +35,12 @@ class PdfFileCreator {
 
   void addSection(int site) throws IOException {
     PdfPage pdfPage = this.pdfPages.get(site);
-    pdfPage.addSection(pdfDocument);
+    pdfPage.addSection(pdfDocument, PdfFont.TIMES_ROMAN, 25, 100);
+  }
+
+  void addTable(int site, List<String> content, Point position) throws IOException {
+    PdfPage pdfPage = this.pdfPages.get(site);
+    pdfPage.addTable(pdfDocument, Optional.empty(), content, position);
   }
 
   void addTable(int site) throws IOException {
